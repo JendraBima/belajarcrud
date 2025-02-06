@@ -1,0 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+.table-responsive th{
+    background: rgba(0, 0, 255, 0.267);
+}
+/* .container {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+
+} */
+
+.blockquote-footer {
+    margin: 5px;
+}
