@@ -8,22 +8,31 @@ $id = $_GET["id"];
 $siswa = query("SELECT * FROM ekskul WHERE id = $id")[0];
 
 if (isset($_POST["submit"])) {
-
-    if (ubahSiswa($_POST) > 0) {
-        echo "
-            <script>
-                alert('Data berhasil diubah!');
-                document.location.href = 'index.php';
-            </script>
-        ";
-    } else {
-        echo "
-        <script>
-            alert('Data gagal diubah!');
-            document.location.href = 'index.php';
-        </script>
-    ";
-    }
+	try {
+		if (ubahSiswa($_POST) > 0) {
+			echo "
+				<script>
+					alert('Data berhasil diubah!');
+					document.location.href = 'index.php';
+				</script>
+			";
+		} else {
+			echo "
+			<script>
+				alert('Data gagal diubah!');
+				document.location.href = 'index.php';
+			</script>
+		";
+		}
+	} catch (Exception $e) {
+		// var_dump($e->getMessage()); exit();
+		echo '
+			<script>
+				alert("'.$e->getMessage().'");
+				document.location.href = "index.php";
+			</script>
+		';
+	}
 }
 
 // if(isset($_POST["submit"])) {
@@ -135,13 +144,13 @@ if (isset($_POST["submit"])) {
             <div class="form-group">
             <label for="gambar">Gambar:</label><br>
                 <?php if (!empty($siswa["gambar"])) : ?>
-                    <img id="previewImg" src="uploads/<?= $siswa["gambar"]; ?>" alt="Gambar Siswa" width="100">
+                    <img id="previewImg" src="uploads/<?= $siswa["gambar"]; ?>" alt="Gambar Siswa" width="600">
                     <?php else : ?>
-                    <img id="previewImg" src="#" alt="Pratinjau Gambar" width="100" style="display: none;">
+                    <img id="previewImg" src="#" alt="Pratinjau Gambar" width="600" style="display: none;">
                     <?php endif; ?>
                 <input type="hidden" name="gambarbien" value="<?= $siswa["gambar"]; ?>">
                 <input type="file" name="fileToUpload" id="fileToUpload" onchange="previewImage(event)">
-				<img src="uploads/<?= $siswa["gambar"]; ?>" alt="">
+				<!-- <img src="uploads/<?= $siswa["gambar"]; ?>" alt=""> -->
             </div>
 			<button type="submit" name="submit">Ubah Data</button>
 		</form>
